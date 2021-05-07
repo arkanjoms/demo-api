@@ -1,16 +1,5 @@
-FROM golang:alpine as builder
-ENV GO111MODULE=on
-WORKDIR /build
-COPY . .
-RUN go mod download
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o demo-api
-
-###
-FROM alpine as dist
-COPY --from=builder /build/demo-api /app/
-RUN addgroup -S user && adduser -S user -G user \
-    && chown -R user:user  /app
-USER user
+FROM ubuntu
+COPY main /app/main
 WORKDIR /app
 EXPOSE 8080
-CMD ["./demo-api"]
+CMD ["./main"]

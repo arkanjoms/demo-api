@@ -1,0 +1,23 @@
+docker info
+docker image help
+docker container help
+docker volume help
+docker network help
+
+===================================================
+
+docker container run -p 9090:80 --name web nginx:alpine
+docker container exec -it web /bin/sh
+docker container exec -it web ls
+
+===================================================
+
+docker build . -t demo-api-ubuntu
+
+docker container run --rm -p 8181:8080 --name demo-api-container demo-api-ubuntu
+
+===================================================
+
+RUN apk add --no-cache openssh
+time bash -c "docker build . -f Dockerfile.multi -t demo-api --no-cache"
+time bash -c "DOCKER_BUILDKIT=1 docker build . -f Dockerfile.multi -t demo-api --no-cache"
